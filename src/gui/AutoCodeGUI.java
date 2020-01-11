@@ -1,5 +1,6 @@
 package gui;
 import logic.CodePicker;
+import logic.InstanceVariable;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -8,12 +9,16 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Enumeration;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,12 +28,56 @@ import javax.swing.UIManager;
 public class AutoCodeGUI {
 	
 	private JFrame frame = new JFrame("Auto Coder");
+	JPanel functionPage;
 	private JPanel cards;
 	private CardLayout cl1;
 	private JPanel classPage;
 	
+	private String name;
+	private ArrayList<InstanceVariable> all_inst_vars;
+	private ArrayList<Integer> functions_picked;
+	
+	private JCheckBox chkbox1 = new JCheckBox("private",true);
+	private JCheckBox chkbox2 = new JCheckBox("private",true);
+	private JCheckBox chkbox3 = new JCheckBox("private",true);
+	private JCheckBox chkbox4 = new JCheckBox("private",true);
+	private JCheckBox chkbox5 = new JCheckBox("private",true);
+	private JCheckBox chkbox6 = new JCheckBox("private",true);
+	private JCheckBox chkbox7 = new JCheckBox("private",true);
+	private JCheckBox chkbox8 = new JCheckBox("private",true);
+	private JCheckBox chkbox9 = new JCheckBox("private",true);
+	private JCheckBox chkbox10 = new JCheckBox("private",true);
+	
+	private JTextField ins_var1a = new JTextField(20);
+	private JTextField ins_var1b = new JTextField(20);
+	private JTextField ins_var2a = new JTextField(20);
+	private JTextField ins_var2b = new JTextField(20);
+	private JTextField ins_var3a = new JTextField(20);
+	private JTextField ins_var3b = new JTextField(20);
+	private JTextField ins_var4a = new JTextField(20);
+	private JTextField ins_var4b = new JTextField(20);
+	private JTextField ins_var5a = new JTextField(20);
+	private JTextField ins_var5b = new JTextField(20);
+	private JTextField ins_var6a = new JTextField(20);
+	private JTextField ins_var6b = new JTextField(20);
+	private JTextField ins_var7a = new JTextField(20);
+	private JTextField ins_var7b = new JTextField(20);
+	private JTextField ins_var8a = new JTextField(20);
+	private JTextField ins_var8b = new JTextField(20);
+	private JTextField ins_var9a = new JTextField(20);
+	private JTextField ins_var9b = new JTextField(20);
+	private JTextField ins_var10a = new JTextField(20);
+	private JTextField ins_var10b = new JTextField(20);
+	
+	private JCheckBox[] chkbox_arr;
+	private JTextField[] ins_vara_arr;
+	private JTextField[] ins_varb_arr;
+	
+	
 	public AutoCodeGUI () {
+		functions_picked = new ArrayList<Integer>();
 		startGUI();
+		
 	}
 	
 	public void startGUI() {
@@ -48,8 +97,24 @@ public class AutoCodeGUI {
 		
 		cards.add(classPage, "class");
 		
-		JPanel functionPage = new JPanel(new FlowLayout());
+		functionPage = new JPanel(new FlowLayout());
 		cards.add(functionPage, "functions");
+		
+		chkbox_arr = new JCheckBox[]{
+				chkbox1,chkbox2,chkbox3,chkbox4,chkbox5,
+				chkbox6,chkbox7,chkbox8,chkbox9,chkbox10
+		};
+		
+		ins_vara_arr = new JTextField[]{
+				ins_var1a,ins_var2a,ins_var3a,ins_var4a,ins_var5a,
+				ins_var6a,ins_var7a,ins_var8a,ins_var9a,ins_var10a
+		};
+		
+		ins_varb_arr = new JTextField[]{
+				ins_var1b,ins_var2b,ins_var3b,ins_var4b,ins_var5b,
+				ins_var6b,ins_var7b,ins_var8b,ins_var9b,ins_var10b
+		};
+		
 		
 		JPanel instructions = new JPanel(new GridLayout(3,1));
 		JPanel classname = new JPanel(new FlowLayout());
@@ -63,6 +128,10 @@ public class AutoCodeGUI {
 		JPanel instr2 = new JPanel(new FlowLayout());
 		instr1.add(instruct1);
 		instr2.add(instruct2);
+		
+		JLabel error_message = new JLabel("");
+		JPanel error_panel = new JPanel(new FlowLayout());
+		error_panel.add(error_message);
 		//instruct1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		//instruct2.setAlignmentX(JLabel.CENTER_ALIGNMENT);
 		
@@ -81,80 +150,7 @@ public class AutoCodeGUI {
 		JLabel private_type = new JLabel("    Private?");
 		JLabel var_type = new JLabel("Variable Type");
 		JLabel var_name = new JLabel("Variable Name");
-
-		JCheckBox chkbox1 = new JCheckBox("private",true);
-		JCheckBox chkbox2 = new JCheckBox("private",true);
-		JCheckBox chkbox3 = new JCheckBox("private",true);
-		JCheckBox chkbox4 = new JCheckBox("private",true);
-		JCheckBox chkbox5 = new JCheckBox("private",true);
-		JCheckBox chkbox6 = new JCheckBox("private",true);
-		JCheckBox chkbox7 = new JCheckBox("private",true);
-		JCheckBox chkbox8 = new JCheckBox("private",true);
-		JCheckBox chkbox9 = new JCheckBox("private",true);
-		JCheckBox chkbox10 = new JCheckBox("private",true);
 		
-		JTextField ins_var1a = new JTextField(20);
-		JTextField ins_var1b = new JTextField(20);
-		JTextField ins_var2a = new JTextField(20);
-		JTextField ins_var2b = new JTextField(20);
-		JTextField ins_var3a = new JTextField(20);
-		JTextField ins_var3b = new JTextField(20);
-		JTextField ins_var4a = new JTextField(20);
-		JTextField ins_var4b = new JTextField(20);
-		JTextField ins_var5a = new JTextField(20);
-		JTextField ins_var5b = new JTextField(20);
-		JTextField ins_var6a = new JTextField(20);
-		JTextField ins_var6b = new JTextField(20);
-		JTextField ins_var7a = new JTextField(20);
-		JTextField ins_var7b = new JTextField(20);
-		JTextField ins_var8a = new JTextField(20);
-		JTextField ins_var8b = new JTextField(20);
-		JTextField ins_var9a = new JTextField(20);
-		JTextField ins_var9b = new JTextField(20);
-		JTextField ins_var10a = new JTextField(20);
-		JTextField ins_var10b = new JTextField(20);
-		
-		/*
-		instance_vars.add(chkbox1);
-		instance_vars.add(ins_var1a);
-		instance_vars.add(ins_var1b);
-		
-		instance_vars.add(chkbox2);
-		instance_vars.add(ins_var2a);
-		instance_vars.add(ins_var2b);
-		
-		instance_vars.add(chkbox3);
-		instance_vars.add(ins_var3a);
-		instance_vars.add(ins_var3b);
-		
-		instance_vars.add(chkbox4);
-		instance_vars.add(ins_var4a);
-		instance_vars.add(ins_var4b);
-		
-		instance_vars.add(chkbox5);
-		instance_vars.add(ins_var5a);
-		instance_vars.add(ins_var5b);
-		
-		instance_vars.add(chkbox6);
-		instance_vars.add(ins_var6a);
-		instance_vars.add(ins_var6b);
-		
-		instance_vars.add(chkbox7);
-		instance_vars.add(ins_var7a);
-		instance_vars.add(ins_var7b);
-		
-		instance_vars.add(chkbox8);
-		instance_vars.add(ins_var8a);
-		instance_vars.add(ins_var8b);
-		
-		instance_vars.add(chkbox9);
-		instance_vars.add(ins_var9a);
-		instance_vars.add(ins_var9b);
-		
-		instance_vars.add(chkbox10);
-		instance_vars.add(ins_var10a);
-		instance_vars.add(ins_var10b);
-		*/
 		JLabel ph = new JLabel("    ");
 		JLabel ph2 = new JLabel("    ");
 		JLabel ph3 = new JLabel("    ");
@@ -264,6 +260,7 @@ public class AutoCodeGUI {
 		
 		instructions.add(instr1);
 		instructions.add(instr2);
+		instructions.add(error_panel);
 		//classPage.add(instructions);
 		
 		classname.add(class_label);
@@ -298,8 +295,39 @@ public class AutoCodeGUI {
 				.addComponent(ph5)
 				);
 		
+		next.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (class_name.getText().isEmpty()) {
+					error_message.setText("Please enter a Class name, at least!");
+					error_message.setFont(new Font("Serif",Font.BOLD,30));
+					//instructions.add(error_panel);
+				}
+				else {
+					name = class_name.getText();
+					cl1.show(cards, "functions");
+					packageVariables();
+					
+				}
+			}
+		});
+		
+		createFunctionPage();
+		
 		frame.pack();
 		frame.setVisible(true);
+	}
+	
+	public void createFunctionPage() {
+		String[] functions = {"Select a function","Bubble Sort", "QuickSort", 
+				"Read TXT File", "Write to TXT File","Read CSV File", 
+				"Write to CSV File"};
+		
+		JComboBox<String> funcChoice = new JComboBox<String>(functions);
+		funcChoice.setSelectedIndex(0);
+		
+		functionPage.add(funcChoice);
+		
 	}
 	
 	public static void setDefaultUIFont (javax.swing.plaf.FontUIResource f){
@@ -310,6 +338,18 @@ public class AutoCodeGUI {
 			Object value = UIManager.get (key);
 			if (value instanceof javax.swing.plaf.FontUIResource)
 				UIManager.put (key, f);
+		}
+	}
+	
+	public void packageVariables() {
+		for (int i = 0; i < 10; i++) {
+			if (ins_vara_arr[i].getText().isEmpty()) {
+				continue;
+			}
+			
+			all_inst_vars.add(new InstanceVariable(chkbox_arr[i].isSelected(),
+					ins_vara_arr[i].getText(),
+					ins_varb_arr[i].getText()));
 		}
 	}
 	

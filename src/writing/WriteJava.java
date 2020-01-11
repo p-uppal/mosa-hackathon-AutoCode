@@ -20,6 +20,7 @@ public class WriteJava {
 
 	}
 
+	/*
 	public static void main(String[] args) {
 		ArrayList<String> codetest = new ArrayList<String>();
 		codetest.add("package test;\n");
@@ -35,7 +36,6 @@ public class WriteJava {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 	}
+	*/
 }
