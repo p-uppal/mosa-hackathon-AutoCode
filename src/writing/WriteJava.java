@@ -25,7 +25,7 @@ public class WriteJava {
 		codetest.add("package test;\n");
 		codetest.add("public class Test {");
 		codetest.add("\tpublic static void main(String[] args) {");
-		codetest.add("\t\tSystem.out.println(\"it works\");");
+		codetest.add("        System.out.println(\"it works\");");
 		codetest.add("\t}");
 		codetest.add("}");
 		
