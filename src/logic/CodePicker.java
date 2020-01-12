@@ -16,11 +16,7 @@ public class CodePicker {
 	public void addFunction(int type, boolean isPrivate, String func_name) {
 		switch (type) {
 			case 1:
-				BubbleSort bs = new BubbleSort(isPrivate, func_name);
-				functions += bs.toString();
-				break;
-			case 2:
-				MergeSort ms = new MergeSort(isPrivate, func_name);
+				Quicksort ms = new Quicksort(isPrivate, func_name);
 				functions += ms.toString();
 				break;
 			default:

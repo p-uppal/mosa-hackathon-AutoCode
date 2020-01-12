@@ -82,11 +82,25 @@ public class AutoCodeGUI {
 	private CardLayout cl3;
 	
 	private JPanel blank;
+	private JPanel function_params;
 	private JPanel function_details;
 	private JLabel details;
+	private JLabel details2;
 	
+	private JPanel parameters;
+	private JTextField param_text1a;
+	private JTextField param_text1b;
+	private JTextField param_text2a;
+	private JTextField param_text2b;
+	private JTextField param_text3a;
+	private JTextField param_text3b;
+	private JTextField param_text4a;
+	private JTextField param_text4b;
 	
-	private JPanel constructor;
+	private JButton addButton;
+	private JButton continueButton;
+	private JPanel button_panel;
+	
 	private JPanel bubble_sort;
 	private JPanel quicksort;
 	private JPanel readtxt;
@@ -118,7 +132,7 @@ public class AutoCodeGUI {
 		
 		cards.add(classPage, "class");
 		
-		functionPage = new JPanel(new GridLayout(2,1));
+		functionPage = new JPanel(new GridLayout(3,1));
 		cards.add(functionPage, "functions");
 		
 		chkbox_arr = new JCheckBox[]{
@@ -341,25 +355,51 @@ public class AutoCodeGUI {
                 int selected = funcChoice.getSelectedIndex();
                 switch (selected) {
                 	case 1:
-                		cl3.show(param_panel, "constructor");
+                		details2.setVisible(false);
+                		parameters.setVisible(true);
+                		details.setText("Enter your parameters. Leave blank for default constructor");
+                		cl3.show(param_panel, "details");
                 		break;
-                	case 2:
-                		cl3.show(param_panel, "bs");
+                	case 2: //bubble sort
+                		details2.setVisible(false);
+                		details.setText("bubble sort uses INSERT MORE");
+                		parameters.setVisible(false);
+                		cl3.show(param_panel, "details");
                 		break;
-                	case 3:
-                		cl3.show(param_panel, "qs");
+                	case 3: //quicksort
+                		details2.setVisible(false);
+                		details.setText("quicksort uses INSERT MORE");
+                		parameters.setVisible(false);
+                		cl3.show(param_panel, "details");
                 		break;
-                	case 4:
-                		cl3.show(param_panel, "rt");
+                	case 4: //read txt
+                		details2.setVisible(false);
+                		details.setText("The readTXT function requires an input String of the filename and will output an "
+                				+ "ArrayList<String> with the data from the file sorted by lines.");
+                		parameters.setVisible(false);
+                		cl3.show(param_panel, "details");
                 		break;
-                	case 5:
-                		cl3.show(param_panel, "wt");
+                	case 5: //write txt
+                		details2.setVisible(false);
+                		details.setText("The writeTXT function requires an input ArrayList<String> of the lines "
+                				+ "needing to be written and a String of the filename to write to.");
+                		parameters.setVisible(false);
+                		cl3.show(param_panel, "details");
                 		break;
-                	case 6:
-                		cl3.show(param_panel, "rc");
+                	case 6: //read csv
+                		details2.setVisible(false);
+                		details.setText("The readCSV function requires an input String of the filename and will output an "
+                				+ "ArrayList<String> with the data from the file sorted by lines.");
+                		cl3.show(param_panel, "details");
                 		break;
-                	case 7:
-                		cl3.show(param_panel, "wc");
+                	case 7: //write csv
+                		details2.setVisible(true);
+                		details.setText("The writeCSV function requires an input ArrayList<String[]> where every String[] "
+                				+ "is a line in the CSV file and every ");
+                		details2.setText("element in the String[] is another cell in that line"
+                				+ " and also a String of the filename to write to.");
+                		parameters.setVisible(false);
+                		cl3.show(param_panel, "details");
                 		break;
                 	default:
                 		cl3.show(param_panel, "blank");
@@ -367,6 +407,19 @@ public class AutoCodeGUI {
                 }
             }
         });
+		
+		addButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int choice = funcChoice.getSelectedIndex();
+				if (choice == 0) {
+					func_instructions.setFont(new Font("Serif",Font.BOLD,30));
+				}
+				else {
+					functions_picked.add(choice);
+				}
+			}
+		});
 		
 		frame.pack();
 		frame.setVisible(true);
@@ -398,7 +451,7 @@ public class AutoCodeGUI {
 		param_panel.setLayout(cl3);
 		
 		blank = new JPanel();
-		constructor = new JPanel(new GridLayout(6,2));
+		
 		bubble_sort = new JPanel(new FlowLayout());
 		quicksort = new JPanel(new FlowLayout());
 		readtxt = new JPanel(new FlowLayout());
@@ -406,22 +459,54 @@ public class AutoCodeGUI {
 		readcsv = new JPanel(new FlowLayout());
 		writecsv = new JPanel(new FlowLayout());
 		
-		JPanel function_details = new JPanel(new FlowLayout());
-		JLabel details = new JLabel("");
+		function_params = new JPanel(new GridLayout(2,1));
+		function_details = new JPanel(new FlowLayout());
+		details = new JLabel("");
+		details2 = new JLabel("");
+		function_details.add(details);
+		function_details.add(details2);
+		details2.setVisible(false);
+		function_params.add(function_details);
 		
-		param_panel.add(blank,"blank");
-		param_panel.add(blank,"blank");
-		/*
-		param_panel.add(constructor,"constructor");
-		param_panel.add(bubble_sort,"bs");
-		param_panel.add(quicksort,"qs");
-		param_panel.add(readtxt,"rt");
-		param_panel.add(writetxt,"wt");
-		param_panel.add(readcsv,"rc");
-		param_panel.add(writecsv,"wc");
-		*/
+		//Parameters
+		parameters = new JPanel(new GridLayout(5,2));
+		param_text1a = new JTextField(20);
+		param_text1b = new JTextField(20);
+		param_text2a = new JTextField(20);
+		param_text2b = new JTextField(20);
+		param_text3a = new JTextField(20);
+		param_text3b = new JTextField(20);
+		param_text4a = new JTextField(20);
+		param_text4b = new JTextField(20);
 		
+		parameters.add((new JPanel(new FlowLayout())).add(new JLabel("Parameter Type")));
+		parameters.add((new JPanel(new FlowLayout())).add(new JLabel("Parameter Name")));
+		parameters.add(param_text1a);
+		parameters.add(param_text1b);
+		parameters.add(param_text2a);
+		parameters.add(param_text2b);
+		parameters.add(param_text3a);
+		parameters.add(param_text3b);
+		parameters.add(param_text4a);
+		parameters.add(param_text4b);
+
+		parameters.setVisible(false);
+		function_params.add(parameters);
+				
+		param_panel.add(blank,"blank");
+		param_panel.add(function_params,"details");
+
 		functionPage.add(param_panel);
+		
+		//Button
+		addButton = new JButton("Add Function");
+		continueButton = new JButton("Continue");
+		JLabel placeholder = new JLabel("    ");
+		button_panel = new JPanel(new FlowLayout());
+		button_panel.add(addButton);
+		button_panel.add(placeholder);
+		button_panel.add(continueButton);
+		functionPage.add(button_panel);
 		
 	}
 
