@@ -73,6 +73,27 @@ public class AutoCodeGUI {
 	private JTextField[] ins_vara_arr;
 	private JTextField[] ins_varb_arr;
 	
+	private JComboBox<String> funcChoice;
+	private JPanel combo_panel;
+	private JLabel func_instructions;
+	private JPanel instr;
+	private JPanel combobox_instr;
+	private JPanel param_panel;
+	private CardLayout cl3;
+	
+	private JPanel blank;
+	private JPanel function_details;
+	private JLabel details;
+	
+	
+	private JPanel constructor;
+	private JPanel bubble_sort;
+	private JPanel quicksort;
+	private JPanel readtxt;
+	private JPanel writetxt;
+	private JPanel readcsv;
+	private JPanel writecsv;
+	
 	
 	public AutoCodeGUI () {
 		functions_picked = new ArrayList<Integer>();
@@ -97,7 +118,7 @@ public class AutoCodeGUI {
 		
 		cards.add(classPage, "class");
 		
-		functionPage = new JPanel(new FlowLayout());
+		functionPage = new JPanel(new GridLayout(2,1));
 		cards.add(functionPage, "functions");
 		
 		chkbox_arr = new JCheckBox[]{
@@ -314,22 +335,96 @@ public class AutoCodeGUI {
 		
 		createFunctionPage();
 		
+		funcChoice.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+
+                int selected = funcChoice.getSelectedIndex();
+                switch (selected) {
+                	case 1:
+                		cl3.show(param_panel, "constructor");
+                		break;
+                	case 2:
+                		cl3.show(param_panel, "bs");
+                		break;
+                	case 3:
+                		cl3.show(param_panel, "qs");
+                		break;
+                	case 4:
+                		cl3.show(param_panel, "rt");
+                		break;
+                	case 5:
+                		cl3.show(param_panel, "wt");
+                		break;
+                	case 6:
+                		cl3.show(param_panel, "rc");
+                		break;
+                	case 7:
+                		cl3.show(param_panel, "wc");
+                		break;
+                	default:
+                		cl3.show(param_panel, "blank");
+                		break;
+                }
+            }
+        });
+		
 		frame.pack();
 		frame.setVisible(true);
 	}
 	
 	public void createFunctionPage() {
-		String[] functions = {"Select a function","Bubble Sort", "QuickSort", 
-				"Read TXT File", "Write to TXT File","Read CSV File", 
-				"Write to CSV File"};
+		String[] functions = {"Select a function","Constructor","Bubble Sort", 
+				"QuickSort", "Read TXT File", "Write to TXT File",
+				"Read CSV File", "Write to CSV File"};
 		
-		JComboBox<String> funcChoice = new JComboBox<String>(functions);
+		funcChoice = new JComboBox<String>(functions);
 		funcChoice.setSelectedIndex(0);
+		funcChoice.setEditable(false);
+		combo_panel = new JPanel(new FlowLayout());
+		combo_panel.add(funcChoice);
 		
-		functionPage.add(funcChoice);
+		func_instructions = new JLabel("Please choose a function, enter parameters, and click the add button to add it to your class");
+		instr = new JPanel(new FlowLayout());
+		instr.add(func_instructions);
+		
+		combobox_instr = new JPanel(new GridLayout(4,1));
+		combobox_instr.add(instr);
+		combobox_instr.add(combo_panel);
+		
+		functionPage.add(combobox_instr);
+		
+		cl3 = new CardLayout();
+		param_panel = new JPanel();
+		param_panel.setLayout(cl3);
+		
+		blank = new JPanel();
+		constructor = new JPanel(new GridLayout(6,2));
+		bubble_sort = new JPanel(new FlowLayout());
+		quicksort = new JPanel(new FlowLayout());
+		readtxt = new JPanel(new FlowLayout());
+		writetxt = new JPanel(new FlowLayout());
+		readcsv = new JPanel(new FlowLayout());
+		writecsv = new JPanel(new FlowLayout());
+		
+		JPanel function_details = new JPanel(new FlowLayout());
+		JLabel details = new JLabel("");
+		
+		param_panel.add(blank,"blank");
+		param_panel.add(blank,"blank");
+		/*
+		param_panel.add(constructor,"constructor");
+		param_panel.add(bubble_sort,"bs");
+		param_panel.add(quicksort,"qs");
+		param_panel.add(readtxt,"rt");
+		param_panel.add(writetxt,"wt");
+		param_panel.add(readcsv,"rc");
+		param_panel.add(writecsv,"wc");
+		*/
+		
+		functionPage.add(param_panel);
 		
 	}
-	
+
 	public static void setDefaultUIFont (javax.swing.plaf.FontUIResource f){
 
 		Enumeration<Object> keys = UIManager.getDefaults().keys();
