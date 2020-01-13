@@ -28,7 +28,8 @@ import javax.swing.UIManager;
 public class AutoCodeGUI {
 	
 	private JFrame frame = new JFrame("Auto Coder");
-	JPanel functionPage;
+	private JPanel functionPage;
+	private JPanel writePage;
 	private JPanel cards;
 	private CardLayout cl1;
 	private JPanel classPage;
@@ -36,6 +37,7 @@ public class AutoCodeGUI {
 	private String name;
 	private ArrayList<InstanceVariable> all_inst_vars;
 	private ArrayList<Integer> functions_picked;
+	private ArrayList<String> functions_parameters;
 	
 	private JCheckBox chkbox1 = new JCheckBox("private",true);
 	private JCheckBox chkbox2 = new JCheckBox("private",true);
@@ -73,6 +75,9 @@ public class AutoCodeGUI {
 	private JTextField[] ins_vara_arr;
 	private JTextField[] ins_varb_arr;
 	
+	private JButton writeButton;
+	private JTextField file_address;
+	
 	private JComboBox<String> funcChoice;
 	private JPanel combo_panel;
 	private JLabel func_instructions;
@@ -100,17 +105,10 @@ public class AutoCodeGUI {
 	private JButton addButton;
 	private JButton continueButton;
 	private JPanel button_panel;
-	
-	private JPanel bubble_sort;
-	private JPanel quicksort;
-	private JPanel readtxt;
-	private JPanel writetxt;
-	private JPanel readcsv;
-	private JPanel writecsv;
-	
-	
+		
 	public AutoCodeGUI () {
 		functions_picked = new ArrayList<Integer>();
+		functions_parameters = new ArrayList<String>();
 		startGUI();
 		
 	}
@@ -134,6 +132,9 @@ public class AutoCodeGUI {
 		
 		functionPage = new JPanel(new GridLayout(3,1));
 		cards.add(functionPage, "functions");
+		
+		writePage = new JPanel (new FlowLayout());
+		cards.add(writePage,"write");
 		
 		chkbox_arr = new JCheckBox[]{
 				chkbox1,chkbox2,chkbox3,chkbox4,chkbox5,
@@ -354,45 +355,39 @@ public class AutoCodeGUI {
 
                 int selected = funcChoice.getSelectedIndex();
                 switch (selected) {
-                	case 1:
+                	case 1: //constructor
                 		details2.setVisible(false);
                 		parameters.setVisible(true);
                 		details.setText("Enter your parameters. Leave blank for default constructor");
                 		cl3.show(param_panel, "details");
                 		break;
-                	case 2: //bubble sort
-                		details2.setVisible(false);
-                		details.setText("bubble sort uses INSERT MORE");
-                		parameters.setVisible(false);
-                		cl3.show(param_panel, "details");
-                		break;
-                	case 3: //quicksort
+                	case 2: //quicksort
                 		details2.setVisible(false);
                 		details.setText("quicksort uses INSERT MORE");
                 		parameters.setVisible(false);
                 		cl3.show(param_panel, "details");
                 		break;
-                	case 4: //read txt
+                	case 3: //read txt
                 		details2.setVisible(false);
                 		details.setText("The readTXT function requires an input String of the filename and will output an "
                 				+ "ArrayList<String> with the data from the file sorted by lines.");
                 		parameters.setVisible(false);
                 		cl3.show(param_panel, "details");
                 		break;
-                	case 5: //write txt
+                	case 4: //write txt
                 		details2.setVisible(false);
                 		details.setText("The writeTXT function requires an input ArrayList<String> of the lines "
                 				+ "needing to be written and a String of the filename to write to.");
                 		parameters.setVisible(false);
                 		cl3.show(param_panel, "details");
                 		break;
-                	case 6: //read csv
+                	case 5: //read csv
                 		details2.setVisible(false);
                 		details.setText("The readCSV function requires an input String of the filename and will output an "
                 				+ "ArrayList<String> with the data from the file sorted by lines.");
                 		cl3.show(param_panel, "details");
                 		break;
-                	case 7: //write csv
+                	case 6: //write csv
                 		details2.setVisible(true);
                 		details.setText("The writeCSV function requires an input ArrayList<String[]> where every String[] "
                 				+ "is a line in the CSV file and every ");
@@ -415,6 +410,25 @@ public class AutoCodeGUI {
 				if (choice == 0) {
 					func_instructions.setFont(new Font("Serif",Font.BOLD,30));
 				}
+				else if (choice == 1) {
+					functions_picked.add(choice);
+					packageParameters();
+				}
+				else {
+					functions_picked.add(choice);
+				}
+			}
+		});
+		
+		createWritePage();
+		
+		writeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int choice = funcChoice.getSelectedIndex();
+				if (choice == 0) {
+					func_instructions.setFont(new Font("Serif",Font.BOLD,30));
+				}
 				else {
 					functions_picked.add(choice);
 				}
@@ -425,8 +439,50 @@ public class AutoCodeGUI {
 		frame.setVisible(true);
 	}
 	
+	public void packageParameters() {
+		String params = "";
+		if (!param_text1a.getText().trim().isEmpty()) {
+			params += param_text1a.getText().trim() + " " 
+		+ (param_text1b.getText().trim().isEmpty()?"a":param_text1b.getText().trim()) + ",";
+			params.trim();
+		}
+		if (!param_text2a.getText().trim().isEmpty()) {
+			params += param_text2a.getText().trim() + " " 
+		+ (param_text2b.getText().trim().isEmpty()?"a":param_text2b.getText().trim()) + ",";
+			params.trim();
+		}
+		if (!param_text3a.getText().trim().isEmpty()) {
+			params += param_text3a.getText().trim() + " " 
+		+ (param_text3b.getText().trim().isEmpty()?"a":param_text3b.getText().trim()) + ",";
+			params.trim();
+		}
+		if (!param_text4a.getText().trim().isEmpty()) {
+			params += param_text4a.getText().trim() + " " 
+		+ (param_text4b.getText().trim().isEmpty()?"a":param_text4b.getText().trim()) + ",";
+			params.trim();
+		}
+		functions_parameters.add(params);
+		
+	}
+
+	private void createWritePage() {
+		JPanel thirds = new JPanel(new GridLayout(3,1));
+		JLabel skip = new JLabel("");
+		thirds.add(skip);
+		JPanel middle = new JPanel(new GridLayout(2,1));
+		JPanel buttn = new JPanel(new FlowLayout());
+		JPanel addr = new JPanel(new FlowLayout());
+		writeButton = new JButton("Write to Java file");
+		file_address = new JTextField(50);
+		buttn.add(writeButton);
+		addr.add(file_address);
+		middle.add(addr);
+		middle.add(buttn);
+		
+	}
+
 	public void createFunctionPage() {
-		String[] functions = {"Select a function","Constructor","Bubble Sort", 
+		String[] functions = {"Select a function","Constructor",
 				"QuickSort", "Read TXT File", "Write to TXT File",
 				"Read CSV File", "Write to CSV File"};
 		
@@ -451,13 +507,6 @@ public class AutoCodeGUI {
 		param_panel.setLayout(cl3);
 		
 		blank = new JPanel();
-		
-		bubble_sort = new JPanel(new FlowLayout());
-		quicksort = new JPanel(new FlowLayout());
-		readtxt = new JPanel(new FlowLayout());
-		writetxt = new JPanel(new FlowLayout());
-		readcsv = new JPanel(new FlowLayout());
-		writecsv = new JPanel(new FlowLayout());
 		
 		function_params = new JPanel(new GridLayout(2,1));
 		function_details = new JPanel(new FlowLayout());
@@ -532,6 +581,8 @@ public class AutoCodeGUI {
 					ins_varb_arr[i].getText()));
 		}
 	}
+	
+	
 	
 	public static void main(String[] args) {
 
