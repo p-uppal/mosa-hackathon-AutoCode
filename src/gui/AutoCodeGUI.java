@@ -366,7 +366,7 @@ public class AutoCodeGUI {
                 		break;
                 	case 2: //quicksort
                 		details2.setVisible(false);
-                		details.setText("quicksort uses INSERT MORE");
+                		details.setText("The quicksort function takes in an int array and sorts it");
                 		parameters.setVisible(false);
                 		cl3.show(param_panel, "details");
                 		break;
@@ -447,6 +447,7 @@ public class AutoCodeGUI {
 					boolean test = cd.publishString(file_address.getText());
 					if (test) {
 						address_label.setText("Writing was Successful");
+						address_label.setFont(new Font("Serif",Font.BOLD,40));
 					}
 					else {
 						address_label.setText("Writing was not Successful. Perhaps the filepath is incorrect");
@@ -499,7 +500,8 @@ public class AutoCodeGUI {
 		JPanel buttn = new JPanel(new FlowLayout());
 		JPanel addr = new JPanel(new FlowLayout());
 		writeButton = new JButton("Write to Java file");
-		address_label = new JLabel("Please write out the full address of the folder to write the java file: ");
+		address_label = new JLabel("Please write the full address of the folder for your java file. "
+				+ "For example: C:\\Documents\\Code\\");
 		file_address = new JTextField(50);
 		buttn.add(writeButton);
 		addr.add(file_address);

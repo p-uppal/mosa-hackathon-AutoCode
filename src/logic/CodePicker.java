@@ -18,7 +18,6 @@ public class CodePicker {
 		addInstanceVars(all_inst_vars);
 		addFunctions(functions_picked, function_parameters);
 		buildFinalString();
-
 	}
 	
 	public CodePicker(String class_n,ArrayList<Integer> functions_picked, ArrayList<String> function_parameters) {
@@ -56,7 +55,7 @@ public class CodePicker {
 	}
 
 	public void buildFinalString() {
-		finalString = "public " + classname + "() {\n"
+		finalString = "public class " + classname + "() {\n"
 				+ instance_variables
 				+ functions
 				+"}\n";
@@ -68,7 +67,7 @@ public class CodePicker {
 		}
 		
 		for (InstanceVariable iv : inst_vars) {
-			instance_variables += "" + (iv.getIsPrivate() ? "private" : "public") 
+			instance_variables += "\t" + (iv.getIsPrivate() ? "private" : "public") 
 					+ " " + iv.getVar_type() + " " + iv.getVar_name() + ";\n";
 		}
 		instance_variables += "\n";
@@ -84,6 +83,7 @@ public class CodePicker {
 			case 1:
 				functions += getConstructorString(classname, function_parameters.get(constr_counter));
 				constr_counter++;
+				break;
 			case 2:
 				functions += qs.toString();
 				break;

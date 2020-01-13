@@ -1,7 +1,5 @@
 package logic;
 
-import java.util.Arrays;
-
 public class Quicksort {
 
     @Override
