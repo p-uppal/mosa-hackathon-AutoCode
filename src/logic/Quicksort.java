@@ -4,22 +4,15 @@ import java.util.Arrays;
 
 public class Quicksort {
 	boolean isPrivate;
-	String function_name;
 
-	public Quicksort(boolean isPrivate, String func_name) {
-		function_name = func_name;
+	public Quicksort(boolean isPrivate) {
 		this.isPrivate = isPrivate;
-		
-		if (function_name.trim().isEmpty()) {
-			function_name = "quickSort";
-		}
-		
 	}
 
     @Override
     public String toString() {
     	String quicksortStr = 
-    			"\t" + (isPrivate?"private":"public") + " static void " + function_name + "(int[] int_array) {\n" + 
+    			"\t" + (isPrivate?"private":"public") + " static void quickSort(int[] int_array) {\n" + 
     			"\t\trecursiveSort(int_array, 0, int_array.length - 1);\n" + 
     			"\t}\n" + 
     			"\t" + (isPrivate?"private":"public") + " static void recursiveSort(int[] int_array, int startInd, int endInd) {\n" + 

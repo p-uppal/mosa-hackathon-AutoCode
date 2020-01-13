@@ -20,10 +20,10 @@ public class CodePicker {
 		instance_variables += "" + (isPrivate? "private" : "public") + " " + var_type + " " + var_name + ";\n";
 	}
 	
-	public void addFunctions(int type, boolean isPrivate, String func_name) {
+	public void addFunctions(int type, boolean isPrivate) {
 		switch (type) {
 			case 1:
-				Quicksort ms = new Quicksort(isPrivate, func_name);
+				Quicksort ms = new Quicksort(isPrivate);
 				functions += ms.toString();
 				break;
 			default:
