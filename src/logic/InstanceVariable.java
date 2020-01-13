@@ -11,7 +11,7 @@ public class InstanceVariable {
 		this.var_name = var_name;
 	}
 
-	public boolean isPrivate() {
+	public boolean getIsPrivate() {
 		return isPrivate;
 	}
 

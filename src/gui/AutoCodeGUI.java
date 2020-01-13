@@ -76,6 +76,7 @@ public class AutoCodeGUI {
 	private JTextField[] ins_varb_arr;
 	
 	private JButton writeButton;
+	private JLabel address_label;
 	private JTextField file_address;
 	
 	private JComboBox<String> funcChoice;
@@ -109,6 +110,7 @@ public class AutoCodeGUI {
 	public AutoCodeGUI () {
 		functions_picked = new ArrayList<Integer>();
 		functions_parameters = new ArrayList<String>();
+		all_inst_vars = new ArrayList<InstanceVariable>();
 		startGUI();
 		
 	}
@@ -349,6 +351,7 @@ public class AutoCodeGUI {
 		});
 		
 		createFunctionPage();
+		createWritePage();
 		
 		funcChoice.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
@@ -420,17 +423,34 @@ public class AutoCodeGUI {
 			}
 		});
 		
-		createWritePage();
+		continueButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cl1.show(cards, "write");
+			}
+		});
 		
 		writeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int choice = funcChoice.getSelectedIndex();
-				if (choice == 0) {
-					func_instructions.setFont(new Font("Serif",Font.BOLD,30));
+				if (address_label.getText().isEmpty()) {
+					address_label.setFont(new Font("Serif",Font.BOLD,30));
 				}
 				else {
-					functions_picked.add(choice);
+					CodePicker cd;
+					if (all_inst_vars.isEmpty()) {
+						cd = new CodePicker(name, functions_picked, functions_parameters);
+					}
+					else {
+						cd = new CodePicker(name, all_inst_vars, functions_picked, functions_parameters);
+					}
+					boolean test = cd.publishString(file_address.getText());
+					if (test) {
+						address_label.setText("Writing was Successful");
+					}
+					else {
+						address_label.setText("Writing was not Successful. Perhaps the filepath is incorrect");
+					}
 				}
 			}
 		});
@@ -461,6 +481,11 @@ public class AutoCodeGUI {
 		+ (param_text4b.getText().trim().isEmpty()?"a":param_text4b.getText().trim()) + ",";
 			params.trim();
 		}
+		
+		if (!params.isEmpty()) {
+			params = params.substring(0,(params.length()-1));
+		}
+		params.trim();
 		functions_parameters.add(params);
 		
 	}
@@ -469,15 +494,22 @@ public class AutoCodeGUI {
 		JPanel thirds = new JPanel(new GridLayout(3,1));
 		JLabel skip = new JLabel("");
 		thirds.add(skip);
-		JPanel middle = new JPanel(new GridLayout(2,1));
+		JPanel middle = new JPanel(new GridLayout(3,1));
+		JPanel label = new JPanel(new FlowLayout());
 		JPanel buttn = new JPanel(new FlowLayout());
 		JPanel addr = new JPanel(new FlowLayout());
 		writeButton = new JButton("Write to Java file");
+		address_label = new JLabel("Please write out the full address of the folder to write the java file: ");
 		file_address = new JTextField(50);
 		buttn.add(writeButton);
 		addr.add(file_address);
+		label.add(address_label);
+		middle.add(label);
 		middle.add(addr);
 		middle.add(buttn);
+		thirds.add(middle);
+		
+		writePage.add(thirds);
 		
 	}
 

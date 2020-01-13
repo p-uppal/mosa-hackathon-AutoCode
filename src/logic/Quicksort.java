@@ -3,19 +3,14 @@ package logic;
 import java.util.Arrays;
 
 public class Quicksort {
-	boolean isPrivate;
-
-	public Quicksort(boolean isPrivate) {
-		this.isPrivate = isPrivate;
-	}
 
     @Override
     public String toString() {
     	String quicksortStr = 
-    			"\t" + (isPrivate?"private":"public") + " static void quickSort(int[] int_array) {\n" + 
+    			"\tpublic static void quickSort(int[] int_array) {\n" + 
     			"\t\trecursiveSort(int_array, 0, int_array.length - 1);\n" + 
     			"\t}\n" + 
-    			"\t" + (isPrivate?"private":"public") + " static void recursiveSort(int[] int_array, int startInd, int endInd) {\n" + 
+    			"\tpublic static void recursiveSort(int[] int_array, int startInd, int endInd) {\n" + 
     			"\t\tint index = partition(int_array, startInd, endInd);\n" + 
     			"\t\tif (startInd < index - 1) {\n" + 
     			"\t\t\trecursiveSort(int_array, startInd, index - 1);\n" + 
@@ -24,7 +19,7 @@ public class Quicksort {
     			"\t\t\trecursiveSort(int_array, index, endInd);\n" + 
     			"\t\t}\n" + 
     			"\t}\n" + 
-    			"\t" + (isPrivate?"private":"public") + " static int partition(int[] int_array, int left, int right) {\n" + 
+    			"\tpublic static int partition(int[] int_array, int left, int right) {\n" + 
     			"\t\tint pivot = int_array[left];\n" + 
     			"\t\twhile (left <= right) {\n" + 
     			"\t\t\twhile (int_array[left] < pivot) {\n" + 

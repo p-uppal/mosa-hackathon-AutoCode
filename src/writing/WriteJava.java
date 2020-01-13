@@ -6,6 +6,15 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class WriteJava {
+	
+	public static void writeToFile(String code, String filename) throws IOException {
+		try (FileWriter fw = new FileWriter(filename); PrintWriter out = new PrintWriter(fw)) {
+				out.print(code);
+			}
+
+
+	}
+	/*
 	public static void writeToFile(ArrayList<String> code, String filename) throws IOException {
 		try (FileWriter fw = new FileWriter(filename); PrintWriter out = new PrintWriter(fw)) {
 
@@ -14,12 +23,10 @@ public class WriteJava {
 				out.print(line+"\n");
 			}
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} 
 
 	}
-
+	*/
 	/*
 	public static void main(String[] args) {
 		ArrayList<String> codetest = new ArrayList<String>();
@@ -37,5 +44,8 @@ public class WriteJava {
 			e.printStackTrace();
 		}
 	}
+	
 	*/
+	
+	//C:\Users\Puneet Uppal\Documents\Programming\github\mosa-hackathon-AutoCode\src\test\
 }
