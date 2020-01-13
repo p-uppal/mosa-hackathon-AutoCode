@@ -11,8 +11,8 @@ public class CodePicker {
 			ArrayList<Integer> functions_picked, ArrayList<String> function_parameters) {
 		classname = class_n;
 		functions = "";
-		instance_variables =
-		addInstanceVars;
+		instance_variables = "";
+		addInstanceVars();
 		
 	}
 	
