@@ -2,7 +2,7 @@ package test;
 
 import java.io.FileNotFoundException;
 
-public class Test2() {
+public class Test2 {
 	private int counter;
 	public String helper;
 

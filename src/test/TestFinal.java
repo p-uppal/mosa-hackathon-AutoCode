@@ -1,10 +1,11 @@
-public class Test3 {
-	private int count;
+public class TestFinal {
+	private String tester;
+	public int tested;
 
-	public Test3() {
+	public TestFinal(String name) {
 		
 	}
-	public Test3(String name) {
+	public TestFinal() {
 		
 	}
 	public static void quickSort(int[] int_array) {
@@ -53,5 +54,28 @@ public class Test3 {
 				out.println(line);
 			}
 		}
+	}
+	public static ArrayList<String[]> readCSV(String file) throws FileNotFoundException {
+		ArrayList<String[]> csvLine = new ArrayList<String[]>();
+		try (Scanner s = new Scanner(new File(file))) {
+			s.nextLine();
+			while (s.hasNextLine()) {
+				String info = s.nextLine();
+				String[] bitsOfInfo = info.split(",");
+				csvLine.add(bitsOfInfo);
+			}
+		}
+		return csvLine;
+	}
+	public static void writeCSV(ArrayList<String[]> cell_Lines, String fileToWrite) throws IOException {
+		try (FileWriter fw = new FileWriter(fileToWrite); PrintWriter out = new PrintWriter(fw)) {
+			for (String[] cell_Line: cell_Lines) {
+				String full = "";
+				for (String cell : cell_Line) {
+					full += cell + ",";
+				}
+				out.println(full);
+			}
+		} 
 	}
 }

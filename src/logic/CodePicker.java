@@ -45,17 +45,15 @@ public class CodePicker {
 		String sub = file_address.substring(file_address.length()-1);
 		
 		if (sub.equals("/") || sub.equals("\\")) {
-			System.out.println(file_address + classname.trim() + ".java");
 			return file_address + classname.trim() + ".java";
 		}
 		else {
-			System.out.println(file_address + "\\" + classname.trim() + ".java");
 			return file_address + "\\" + classname.trim() + ".java";
 		}
 	}
 
 	public void buildFinalString() {
-		finalString = "public class " + classname + "() {\n"
+		finalString = "public class " + classname + " {\n"
 				+ instance_variables
 				+ functions
 				+"}\n";

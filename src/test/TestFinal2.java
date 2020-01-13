@@ -1,4 +1,6 @@
-public class Test4 {
+public class TestFinal2 {
+	public int happy;
+
 	public static void quickSort(int[] int_array) {
 		recursiveSort(int_array, 0, int_array.length - 1);
 	}
@@ -29,5 +31,17 @@ public class Test4 {
 			}
 		}
 		return left;
+	}
+	public static ArrayList<String[]> readCSV(String file) throws FileNotFoundException {
+		ArrayList<String[]> csvLine = new ArrayList<String[]>();
+		try (Scanner s = new Scanner(new File(file))) {
+			s.nextLine();
+			while (s.hasNextLine()) {
+				String info = s.nextLine();
+				String[] bitsOfInfo = info.split(",");
+				csvLine.add(bitsOfInfo);
+			}
+		}
+		return csvLine;
 	}
 }
